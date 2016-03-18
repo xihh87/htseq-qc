@@ -21,7 +21,7 @@ In order to plot the mapping quality of a sequencing data set in BAM format:
 2. Plot the mapping data of all data sets:
 
     ```
-    lineplot.py -o mapping_quality_set1.png dir1/mapping_data1.txt [...] \
+    multiplot.py -o mapping_quality_set1.png dir1/mapping_data1.txt [...] \
         dirN/mapping_dataN.txt
     ```
 """
@@ -31,12 +31,14 @@ from matplotlib import pyplot as plt
 
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('-o', '--output', default='lineplot.png', help='Name for the output graph.')
-    #parser.add_argument('-t', '--title', default=None, help='Title for the graph.'
+    parser.add_argument('-o', '--output', default='multiplot.png', help='Name for the output graph.')
+    parser.add_argument('-t', '--title', default=None, help='Title for the graph.')
+    parser.add_argument('-x', '--x-axis', default=None, help='Title for the x axis.')
+    parser.add_argument('-y', '--y-axis', default=None, help='Title for the y axis.')
     parser.add_argument('files', nargs='+', help='A list of filenames containing the data to plot.')
     return parser.parse_args()
 
-def lineplot(filenames, output):
+def multiplot(filenames, args):
     """Reads the info from the `filenames` and plots them to `output`."""
 
     quals = {}
@@ -54,9 +56,16 @@ def lineplot(filenames, output):
     for q in quals:
         plt.plot(bins, quals[q], '-')
 
-    plt.savefig(output)
+    if args.title:
+        plt.title(args.title)
+    if args.x_axis:
+        plt.xlabel(args.x_axis)
+    if args.y_axis:
+	plt.ylabel(args.y_axis)
+
+    plt.savefig(args.output)
 
 
 if __name__ == "__main__":
     args = parse_args()
-    lineplot(args.files, args.output)
+    multiplot(args.files, args)
