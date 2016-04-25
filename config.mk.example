@@ -1,4 +1,5 @@
 DATA_DIR=data
 RESULTS_DIR=results
+REF=/proyectos/BRCA_mtDNA/reference/NC_012920.fasta
 
 NPROC=20
