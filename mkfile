@@ -29,7 +29,7 @@ results/sam/%.sam: data/%_R1_001.fastq.gz data/%_R2_001.fastq.gz
 qualimap:
 	qualima
 
-results/qc/%_fastqc.html: data/%.fastq.gz
+results/fastqc/%_fastqc.html: data/%.fastq.gz
 	mkdir -p $(dirname $target)
 	fastqc $prereq -o $(dirname $target)
 
